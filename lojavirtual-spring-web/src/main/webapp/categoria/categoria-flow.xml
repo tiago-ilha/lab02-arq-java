@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+        start-state="start" parent="global">
+
+    <secured attributes="ROLE_MANAGER"/>
+
+    <persistence-context />
+
+    <input name="startup" />
+	
+    <on-start>
+        <set name="conversationScope.categoriaController" value="categoriaController" />
+    </on-start>
+	
+    <decision-state id="start">
+        <if test="startup != null" then="#{startup}" else="List" />
+    </decision-state>
+    
+    <view-state id="List">
+        <transition on="editarCategoria" to="Edit" />
+        <transition on="sucesso" to="end" />
+    </view-state>
+    
+    <view-state id="Edit">
+        <transition on="sucesso" to="end" />
+    </view-state>
+    
+    <end-state id="end" commit="true" /> 
+    
+</flow>

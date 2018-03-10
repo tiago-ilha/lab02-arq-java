@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    
+    <context-param>
+        <param-name>facelets.REFRESH_PERIOD</param-name>
+        <param-value>2</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+        <param-value>.xhtml</param-value>
+    </context-param>
+    
+    <!-- Configuração para o JBoss AS7 -->
+    <context-param>  
+        <param-name>org.ajax4jsf.VIEW_HANDLERS</param-name>  
+        <param-value>com.sun.facelets.FaceletViewHandler</param-value>  
+    </context-param>
+    
+    <!-- Configuração de skin do RichFaces -->
+    <context-param>
+        <param-name>org.ajax4jsf.SKIN</param-name>
+        <param-value>classic</param-value>
+    </context-param>
+
+    <!-- Filtro para uso de Ajax com RichFaces. Como esta sendo utilizado SWF
+    o filtro deve interceptar o servlet do Spring Web Flow e não do JSF -->
+    <filter>
+        <display-name>Ajax4jsf Filter</display-name>
+        <filter-name>ajax4jsf</filter-name>
+        <filter-class>org.ajax4jsf.Filter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ajax4jsf</filter-name>
+        <servlet-name>dispatcher</servlet-name>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
+
+    
+    <!-- ==================================================================================
+        Configuração do Spring
+    ====================================================================================== -->
+    
+    <!-- Configuração dos deployment descriptors do Spring -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/spring-config.xml,classpath*:br/nom/penha/bruno/arquiteto/**/spring-config.xml</param-value>
+    </context-param>
+
+    <!-- Faz o carregamento das configurações do Spring -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- Habilita os escopos especificos de web para o Spring -->
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+    
+    <!-- Servlet para o Spring WebFlow -->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/swf/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Configuração do Spring Security -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+   
+    
+
+    <!-- Controller do JSF -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    
+    <welcome-file-list>
+        <welcome-file>init.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

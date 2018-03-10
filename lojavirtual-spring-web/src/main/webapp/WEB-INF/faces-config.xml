@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="1.2" 
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd">
+
+    
+    <converter>
+        <converter-for-class>br.nom.penha.bruno.arquiteto.model.Categoria</converter-for-class>
+        <converter-class>br.nom.penha.bruno.arquiteto.web.converter.ConversorCategoria</converter-class>
+    </converter>
+    <converter>
+        <converter-for-class>br.nom.penha.bruno.arquiteto.model.Banco</converter-for-class>
+        <converter-class>br.nom.penha.bruno.arquiteto.web.converter.ConversorBanco</converter-class>
+    </converter>
+    <converter>
+        <converter-for-class>br.nom.penha.bruno.arquiteto.model.BandeiraCartaoCredito</converter-for-class>
+        <converter-class>br.nom.penha.bruno.arquiteto.web.converter.ConversorBandeira</converter-class>
+    </converter>
+    
+    <!-- Configuração para o JBoss AS7 -->
+    <application>
+    	<message-bundle>resources.application</message-bundle>  
+        <view-handler>org.ajax4jsf.application.AjaxViewHandler</view-handler>
+        <!--view-handler>com.sun.facelets.FaceletViewHandler</view-handler-->        
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+        <locale-config>
+        	<default-locale>en</default-locale>
+        </locale-config>        
+    </application>
+    
+    <!-- Configuracao de listener para exibicao de mensagens de erro de login 
+		integradas ao Spring Security -->
+    <lifecycle>
+        <phase-listener>br.nom.penha.bruno.arquiteto.web.security.LoginErrorListener</phase-listener>
+    </lifecycle>
+
+    
+</faces-config>

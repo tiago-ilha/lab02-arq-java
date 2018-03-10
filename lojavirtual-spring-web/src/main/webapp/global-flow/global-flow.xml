@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+        abstract="true">
+
+    <var name="targetFlow" class="java.lang.String" />
+
+    <end-state id="redirect" view="flowRedirect:#{targetFlow}" />
+
+    <global-transitions>
+        <transition on="listarCategorias" to="redirect">
+            <set name="targetFlow" value="'categoria?startup=List'" />
+        </transition>
+        <transition on="editarCategoria" to="redirect">
+            <set name="targetFlow" value="'categoria?startup=Edit'" />
+        </transition>
+        <transition on="listarClientes" to="redirect">
+            <set name="targetFlow" value="'cliente?startup=List'" />
+        </transition>
+        <transition on="editarCliente" to="redirect">
+            <set name="targetFlow" value="'cliente?startup=Edit'" />
+        </transition>
+        <transition on="listarProdutos" to="redirect">
+            <set name="targetFlow" value="'produto?startup=List'" />
+        </transition>
+        <transition on="editarProduto" to="redirect">
+            <set name="targetFlow" value="'produto?startup=Edit'" />
+        </transition>
+        <transition on="listarPedidos" to="redirect">
+            <set name="targetFlow" value="'pedido?startup=List'" />
+        </transition>
+        <transition on="catalogoProdutos" to="redirect">
+            <set name="targetFlow" value="'compra?startup=catalogoProdutos'" />
+        </transition>
+        <transition on="home" to="redirect">
+            <set name="targetFlow" value="'main'" />
+        </transition>
+    </global-transitions>
+
+    <!--exception-handler bean="globalFlowExceptionHandler" /-->
+
+</flow>

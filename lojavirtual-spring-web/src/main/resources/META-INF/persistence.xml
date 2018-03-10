@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+  <persistence-unit name="lojavirtualPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <non-jta-data-source>java:jboss/datasources/lojavirtual</non-jta-data-source>
+    <class>br.nom.penha.bruno.arquiteto.model.Cliente</class>
+    <class>br.nom.penha.bruno.arquiteto.model.Pagamento</class>
+    <class>br.nom.penha.bruno.arquiteto.model.PagamentoBoleto</class>
+    <class>br.nom.penha.bruno.arquiteto.model.PagamentoCartaoCredito</class>
+    <class>br.nom.penha.bruno.arquiteto.model.Categoria</class>
+    <class>br.nom.penha.bruno.arquiteto.model.ItemCompra</class>
+    <class>br.nom.penha.bruno.arquiteto.model.Pedido</class>
+    <class>br.nom.penha.bruno.arquiteto.model.Produto</class>
+    <class>br.nom.penha.bruno.arquiteto.model.ProdutoDigital</class>
+    <class>br.nom.penha.bruno.arquiteto.model.ProdutoMaterial</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+      
+      <!-- habilita exibir os comandos SQL executados -->
+      <property name="hibernate.show_sql" value="true"/>
+      
+      <!-- habilita o uso de cache de segundo nivel com EhCache -->
+      <property name="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.EhCacheRegionFactory" />
+      <!-- Para uso com JBoss AS 7 e Hibernate-cache 4-->
+      <!-- property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory" /-->
+      <property name="hibernate.cache.use_second_level_cache" value="true"/>
+      
+      <!-- habilita o cache para consultas -->
+      <property name="hibernate.cache.use_query_cache" value="true"/>            
+    </properties>
+  </persistence-unit>
+</persistence>

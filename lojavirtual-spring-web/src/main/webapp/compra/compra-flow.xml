@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+        start-state="start" parent="global">
+
+
+    <persistence-context />
+
+    <input name="startup" />
+	
+    <on-start>
+        <set name="conversationScope.compraController" value="compraController" />
+    </on-start>
+	
+    <decision-state id="start">
+        <if test="startup != null" then="#{startup}" else="catalogoProdutos" />
+    </decision-state>
+    
+    <view-state id="catalogoProdutos">
+        <transition on="carrinhoCompras" to="carrinhoCompras" />
+    </view-state>
+
+    <view-state id="carrinhoCompras">
+        <transition on="catalogoProdutos" to="catalogoProdutos" />
+        <transition on="finalizarPedido" to="finalizarPedido" />
+    </view-state>
+    
+    <view-state id="finalizarPedido">
+        <transition on="catalogoProdutos" to="catalogoProdutos" />        
+        <transition on="pedidoEnviado" to="pedidoEnviado" />
+    </view-state>
+
+    <view-state id="pedidoEnviado" />
+    
+    <end-state id="end" commit="true" /> 
+    
+</flow>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+        start-state="start" parent="global">
+
+
+    <persistence-context />
+
+    <input name="startup" />
+	
+    <on-start>
+        <set name="conversationScope.pedidoController" value="pedidoController" />
+    </on-start>
+	
+    <decision-state id="start">
+        <if test="startup != null" then="#{startup}" else="List" />
+    </decision-state>
+    
+    <view-state id="List">
+        <transition on="verPedido" to="View" />
+    </view-state>
+    
+    <view-state id="View" />
+    
+</flow>
